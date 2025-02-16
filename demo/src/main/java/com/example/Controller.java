@@ -15,7 +15,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+
+import java.util.List;
 import java.util.ResourceBundle;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Controller implements Initializable {
 
@@ -47,24 +52,11 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        cargarDatosApi();
-
-        listaGame = FXCollections.observableArrayList();
-
-        // Configurar las columnas
-        columnaPosicion.setCellValueFactory(new PropertyValueFactory<>("posicion"));
-        columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        columnaPuntuacion.setCellValueFactory(new PropertyValueFactory<>("puntuacion"));
-
-        // Asociar la lista con la tabla
-        tableView.setItems(listaGame);
-
-        // Agregar algunos datos de ejemplo
-        listaGame.add(new Game(1, "Juego1", 85));
-        listaGame.add(new Game(2, "Juego2", 90));
-        listaGame.add(new Game(3, "Juego3", 78));
+        initializeTableColumns();
+        fetchGameData();
+        
     }
-    public void cargarDatosApi(){
+    public void fetchGameData(){
         String apiUrl = "https://magicloops.dev/api/loop/471f635b-0b4c-44e5-b811-a2f823baa79f/run?input=I+love+Magic+Loops%21"; 
         
         try {
@@ -83,14 +75,40 @@ public class Controller implements Initializable {
                     response.append(line);
                 }
                 reader.close();
-                
-                System.out.println("Respuesta de la API:");
                 System.out.println(response.toString());
+                addGamesToTable(response.toString());
             } else {
                 System.out.println("Error en la conexión: " + responseCode);
             }
             
             connection.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void initializeTableColumns() {
+        listaGame = FXCollections.observableArrayList();
+    
+        // Configurar las columnas
+        columnaPosicion.setCellValueFactory(new PropertyValueFactory<>("position"));
+        columnaNombre.setCellValueFactory(new PropertyValueFactory<>("name"));
+        columnaPuntuacion.setCellValueFactory(new PropertyValueFactory<>("score"));
+    
+        // Asociar la lista con la tabla
+        tableView.setItems(listaGame);
+    }
+    public void addGamesToTable(String response) {
+        try {
+            // Crear el ObjectMapper
+            ObjectMapper objectMapper = new ObjectMapper();
+    
+            // Convertir el JSON a una lista de objetos Game
+            List<Game> games = objectMapper.readValue(response, new TypeReference<List<Game>>() {});
+    
+            // Agregar los juegos a la lista
+            for (Game game : games) {
+                listaGame.add(game);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

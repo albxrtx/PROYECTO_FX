@@ -1,28 +1,50 @@
 package com.example;
 
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-
 public class Game {
-    private final SimpleIntegerProperty posicion;
-    private final SimpleStringProperty nombre;
-    private final SimpleIntegerProperty puntuacion;
+    private int position;
+    private String name;
+    private int score;
 
-    public Game(int posicion, String nombre, int puntuacion) {
-        this.posicion = new SimpleIntegerProperty(posicion);
-        this.nombre = new SimpleStringProperty(nombre);
-        this.puntuacion = new SimpleIntegerProperty(puntuacion);
+    // Constructor
+    public Game(int position, String name, int score) {
+        this.position = position;
+        this.name = name;
+        this.score = score;
+    }
+    public Game() {
     }
 
-    public int getPosicion() {
-        return posicion.get();
+    // Getters y setters
+    public int getPosition() {
+        return position;
     }
 
-    public String getNombre() {
-        return nombre.get();
+    public void setPosition(int position) {
+        this.position = position;
     }
 
-    public int getPuntuacion() {
-        return puntuacion.get();
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "position=" + position +
+                ", name='" + name + '\'' +
+                ", score=" + score +
+                '}';
     }
 }
