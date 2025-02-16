@@ -10,11 +10,11 @@
    <children>
       <TextField fx:id="tf_name" layoutX="100.0" layoutY="33.0" prefHeight="26.0" prefWidth="450.0" promptText="Campo para filtrar" />
       <Button layoutX="562.0" layoutY="33.0" mnemonicParsing="false" text="Buscar" />
-      <TableView layoutX="100.0" layoutY="84.0" prefHeight="286.0" prefWidth="514.0">
+      <TableView fx:id="tableView" layoutX="100.0" layoutY="84.0" prefHeight="286.0" prefWidth="514.0">
         <columns>
-            <TableColumn prefWidth="88.0" text="Posición" />
-            <TableColumn prefWidth="85.60003662109375" text="Nombre" />
-            <TableColumn prefWidth="75.0" text="Puntuación" />
+            <TableColumn fx:id="columnaPosicion" prefWidth="88.0" text="Posición" />
+            <TableColumn fx:id="columnaNombre" prefWidth="85.60003662109375" text="Nombre" />
+            <TableColumn fx:id="columnaPuntuacion" prefWidth="75.0" text="Puntuación" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

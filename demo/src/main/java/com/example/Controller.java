@@ -5,10 +5,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.util.ResourceBundle;
 
@@ -20,6 +25,20 @@ public class Controller implements Initializable {
     @FXML
     private Button btnAdd;
 
+    @FXML
+    private TableView<Game> tableView;
+
+    @FXML
+    private TableColumn<Game, Integer> columnaPosicion;
+
+    @FXML
+    private TableColumn<Game, String> columnaNombre;
+
+    @FXML
+    private TableColumn<Game, Integer> columnaPuntuacion;
+
+    private ObservableList<Game> listaGame;
+
     private Stage mainWindow;
 
     public void setMainWindow(Stage mainWindow){
@@ -29,8 +48,22 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         cargarDatosApi();
-    }
 
+        listaGame = FXCollections.observableArrayList();
+
+        // Configurar las columnas
+        columnaPosicion.setCellValueFactory(new PropertyValueFactory<>("posicion"));
+        columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        columnaPuntuacion.setCellValueFactory(new PropertyValueFactory<>("puntuacion"));
+
+        // Asociar la lista con la tabla
+        tableView.setItems(listaGame);
+
+        // Agregar algunos datos de ejemplo
+        listaGame.add(new Game(1, "Juego1", 85));
+        listaGame.add(new Game(2, "Juego2", 90));
+        listaGame.add(new Game(3, "Juego3", 78));
+    }
     public void cargarDatosApi(){
         String apiUrl = "https://magicloops.dev/api/loop/471f635b-0b4c-44e5-b811-a2f823baa79f/run?input=I+love+Magic+Loops%21"; 
         
