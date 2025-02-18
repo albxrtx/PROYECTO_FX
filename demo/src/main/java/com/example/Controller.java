@@ -16,11 +16,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+// import com.fasterxml.jackson.core.type.TypeReference;
+// import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Controller implements Initializable {
 
@@ -74,6 +77,7 @@ public class Controller implements Initializable {
                 while ((line = reader.readLine()) != null) {
                     response.append(line);
                 }
+                 
                 reader.close();
                 System.out.println(response.toString());
                 addGamesToTable(response.toString());
@@ -99,16 +103,25 @@ public class Controller implements Initializable {
     }
     public void addGamesToTable(String response) {
         try {
-            // Crear el ObjectMapper
-            ObjectMapper objectMapper = new ObjectMapper();
-    
-            // Convertir el JSON a una lista de objetos Game
-            List<Game> games = objectMapper.readValue(response, new TypeReference<List<Game>>() {});
-    
-            // Agregar los juegos a la lista
-            for (Game game : games) {
-                listaGame.add(game);
+            JSONArray jsonArray = new JSONArray(response);
+        
+            List<Game> temporalList = new ArrayList<>();
+
+            // Recorrer el JSONArray y convertir cada objeto JSON en un Game
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                int position = jsonObject.getInt("position");
+                String name = jsonObject.getString("name");
+                int score = jsonObject.getInt("score"); 
+            
+                Game temporalGame = new Game(position, name, score);
+                temporalList.add(temporalGame);
             }
+
+        for (Game game : temporalList) {
+            listaGame.add(game);
+        }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -39,12 +39,12 @@ public class Game {
         this.score = score;
     }
 
-    @Override
-    public String toString() {
-        return "Game{" +
-                "position=" + position +
-                ", name='" + name + '\'' +
-                ", score=" + score +
-                '}';
-    }
+    // @Override
+    // public String toString() {
+    //     return "Game{" +
+    //             "position=" + position +
+    //             ", name='" + name + '\'' +
+    //             ", score=" + score +
+    //             '}';
+    // }
 }
