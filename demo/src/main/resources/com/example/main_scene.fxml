@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
 <AnchorPane maxHeight="500.0" maxWidth="720.0" minHeight="500.0" minWidth="720.0" prefHeight="500.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controller">
    <children>
-      <TextField fx:id="tf_name" layoutX="100.0" layoutY="33.0" prefHeight="26.0" prefWidth="450.0" promptText="Campo para filtrar" />
-      <Button layoutX="562.0" layoutY="33.0" mnemonicParsing="false" text="Buscar" />
-      <TableView fx:id="tableView" layoutX="100.0" layoutY="84.0" prefHeight="286.0" prefWidth="514.0">
+      <HBox alignment="CENTER" layoutX="-7.0" maxHeight="60.0" maxWidth="720.0" prefHeight="55.0" prefWidth="720.0" spacing="10.0" style="-fx-background-color: #ededed;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TextField fx:id="tf_name" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.2" prefWidth="450.0" promptText="Campo para filtrar" style="-fx-border-color: #a825f8;">
+               <padding>
+                  <Insets bottom="5.0" left="10.0" top="5.0" />
+               </padding>
+            </TextField>
+            <Button mnemonicParsing="false" style="-fx-background-color: #a825f8; -fx-text-fill: #fbf4ff; -fx-font-weight: bold;" text="Buscar">
+               <padding>
+                  <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+               </padding>
+            </Button>
+         </children>
+      </HBox>
+      <TableView fx:id="tableView" layoutX="71.2" layoutY="84.0" prefHeight="350.0" prefWidth="579.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="71.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="70.0">
         <columns>
             <TableColumn fx:id="columnaPosicion" prefWidth="88.0" text="Posición" />
             <TableColumn fx:id="columnaNombre" prefWidth="85.60003662109375" text="Nombre" />
@@ -20,6 +34,9 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button layoutX="100.0" layoutY="388.0" mnemonicParsing="false" text="Exportar" />
+      <Button layoutX="70.0" layoutY="438.0" mnemonicParsing="false" style="-fx-background-color: #a825f8; -fx-text-fill: #fbf4ff; -fx-font-weight: bold;" text="Exportar" AnchorPane.bottomAnchor="36.4">
+         <padding>
+            <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+         </padding></Button>
    </children>
 </AnchorPane>
