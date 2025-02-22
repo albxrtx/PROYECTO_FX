@@ -21,11 +21,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 // import com.fasterxml.jackson.core.type.TypeReference;
 // import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Controller implements Initializable {
+
+    @FXML
+    private TextField tf_search;
 
     @FXML
     private TextField tf_name;
@@ -45,7 +49,8 @@ public class Controller implements Initializable {
     @FXML
     private TableColumn<Game, Integer> columnaPuntuacion;
 
-    private ObservableList<Game> listaGame;
+    private ObservableList<Game> listaGame; // Lista original
+    private ObservableList<Game> listaFiltrada; // Lista filtrada
 
     private Stage mainWindow;
 
@@ -55,11 +60,12 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initializeTableColumns();
-        fetchGameData();
-        
+        listaGame = FXCollections.observableArrayList();
+        listaFiltrada = FXCollections.observableArrayList();
+        inicializarColumnas();
+        obtenerDatosApi();
     }
-    public void fetchGameData(){
+    public void obtenerDatosApi(){
         String apiUrl = "https://magicloops.dev/api/loop/471f635b-0b4c-44e5-b811-a2f823baa79f/run?input=I+love+Magic+Loops%21"; 
         
         try {
@@ -80,7 +86,7 @@ public class Controller implements Initializable {
                  
                 reader.close();
                 System.out.println(response.toString());
-                addGamesToTable(response.toString());
+                añadirJuegosTabla(response.toString());
             } else {
                 System.out.println("Error en la conexión: " + responseCode);
             }
@@ -90,7 +96,7 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
-    public void initializeTableColumns() {
+    public void inicializarColumnas() {
         listaGame = FXCollections.observableArrayList();
     
         // Configurar las columnas
@@ -101,7 +107,7 @@ public class Controller implements Initializable {
         // Asociar la lista con la tabla
         tableView.setItems(listaGame);
     }
-    public void addGamesToTable(String response) {
+    public void añadirJuegosTabla(String response) {
         try {
             JSONArray jsonArray = new JSONArray(response);
         
@@ -116,14 +122,38 @@ public class Controller implements Initializable {
             
                 Game temporalGame = new Game(position, name, score);
                 temporalList.add(temporalGame);
+                
             }
-
-        for (Game game : temporalList) {
-            listaGame.add(game);
-        }
+        listaFiltrada.setAll(temporalList);
+        listaGame.setAll(temporalList);
+        // for (Game game : temporalList) {
+        //     listaGame.add(game);
+        // }
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    public void filtrarDatos(){
+        String filtro = tf_search.getText().trim().toLowerCase(); // Obtener texto del TextField
+
+        if (filtro.isEmpty()) {
+            // Si el campo de búsqueda está vacío, mostrar todos los juegos
+            tableView.setItems(listaGame);
+        } else {
+            // Crear una nueva lista para almacenar los juegos filtrados
+            List<Game> juegosFiltrados = new ArrayList<>();
+            
+            // Recorrer la lista original y agregar solo los juegos que coincidan con el filtro
+            for (Game game : listaGame) {
+                if (game.getName().toLowerCase().contains(filtro)) {
+                    juegosFiltrados.add(game);
+                }
+            }
+        
+            // Asignar la lista filtrada a la tabla
+            listaFiltrada.setAll(juegosFiltrados);
+            tableView.setItems(listaFiltrada);
         }
     }
 }

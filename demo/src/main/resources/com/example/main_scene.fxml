@@ -12,12 +12,12 @@
    <children>
       <HBox alignment="CENTER" layoutX="-7.0" maxHeight="60.0" maxWidth="720.0" prefHeight="55.0" prefWidth="720.0" spacing="10.0" style="-fx-background-color: #ededed;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TextField fx:id="tf_name" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.2" prefWidth="450.0" promptText="Campo para filtrar" style="-fx-border-color: #a825f8;">
+            <TextField fx:id="tf_search" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.2" prefWidth="450.0" promptText="Introduce un nombre para filtrar" style="-fx-border-color: #a825f8;">
                <padding>
                   <Insets bottom="5.0" left="10.0" top="5.0" />
                </padding>
             </TextField>
-            <Button mnemonicParsing="false" style="-fx-background-color: #a825f8; -fx-text-fill: #fbf4ff; -fx-font-weight: bold;" text="Buscar">
+            <Button fx:id="btn_search" mnemonicParsing="false" onAction="#filtrarDatos" style="-fx-background-color: #a825f8; -fx-text-fill: #fbf4ff; -fx-font-weight: bold;" text="Buscar">
                <padding>
                   <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                </padding>
